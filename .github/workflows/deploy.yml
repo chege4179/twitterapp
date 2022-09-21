@@ -1,0 +1,44 @@
+name: Build and deploy website
+
+#on:
+#  push:
+#    branches: [ main ]
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@master
+#      - uses: actions/setup-node@master
+#        with:
+#          node-version: 14
+#      - run: npm install
+#      - run: npm run build
+#
+#  deploy:
+#    needs: build
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@master
+#      - uses: actions/setup-node@master
+#        with:
+#          node-version: 14
+#      - run: npm install
+#      - run: npm run build
+#      - name: Vercel Action
+#        uses: amondnet/vercel-action@v25.1.0
+#        id: deploy-vercel-production
+#        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#        with:
+#          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+#          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+#          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+#          vercel-args: '--prod'
+#          scope: ${{ secrets.VERCEL_ORG_ID }}
+#
+#
+#
+#
+#
+#
