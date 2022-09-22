@@ -7,7 +7,8 @@ const MainDB = knex({
           port : 3306,
           user :  process.env.MYSQL_USER ||'root',
           password : process.env.MYSQL_PASSWORD|| '',
-          database : 'twitterapp'
+          database : 'twitterapp',
+          ssl:{rejectUnauthorized:true}
      }
 });
 const LikeDB = knex({

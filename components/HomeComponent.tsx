@@ -3,7 +3,6 @@ import Image from "next/image";
 import {useSession} from "next-auth/react";
 import BASE_URL from "../util/BaseURL";
 import {toast, ToastContainer} from "react-toastify";
-import ErrnoException = NodeJS.ErrnoException;
 import moment from "moment";
 import "react-toastify/dist/ReactToastify.css"
 import {Tweet} from "../models/Tweet";
