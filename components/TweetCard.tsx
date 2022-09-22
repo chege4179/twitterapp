@@ -2,9 +2,9 @@ import React from 'react';
 import {Tweet} from "../models/Tweet";
 import Image from "next/image";
 import { BiCommentDetail } from "react-icons/bi"
-import { FiRepeat } from "react-icons/Fi"
-import { AiFillHeart } from "react-icons/Ai"
-import { BsUpload } from "react-icons/Bs"
+import { FiRepeat } from "react-icons/fi"
+import { AiFillHeart } from "react-icons/ai"
+import { BsUpload } from "react-icons/bs"
 
 
 
