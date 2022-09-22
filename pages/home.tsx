@@ -7,7 +7,7 @@ import LeftBar from "../components/LeftBar";
 import RightBar from "../components/RightBar";
 import BASE_URL from "../util/BaseURL";
 
-const HomePage:NextPage = () => {
+const HomePage = () => {
      const { data:session } = useSession()
      async function addUserToDB(){
           try {
