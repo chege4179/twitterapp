@@ -22,8 +22,6 @@ async function tweets(req: NextApiRequest, res: NextApiResponse) {
                               user:users.find((user) => user.userId === tweet.tweetUserId)
                          }
                     })
-                    console.log("Tweet Promise",users)
-
                     return res.status(200).json({
                          success:true,
                          msg:"Tweets fetched successfully",

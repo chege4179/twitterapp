@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {NextPage} from "next";
 import HomeLayout from "../components/HomeLayout";
 import {useSession} from "next-auth/react";
 import CenterBar from "../components/CenterBar";
