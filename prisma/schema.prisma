@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("LOCAL_DATABASE_URL")
+}
+
+
+model User {
+  userId      String @id @default(uuid())
+  displayName String
+  email       String @unique
+  imageUrl    String
+  tweets      Tweet[]
+  comments    Comment[]
+  likes       Like []
+  retweets   Retweet []  @relation("Retweets")
+
+}
+
+model Tweet {
+  tweetId       String  @id @default(uuid())
+  tweetContent  String
+  tweetUserId   String
+  tweetImageUrl String?
+  createdAt     String
+  createdOn     String
+  likeCount     Int
+  retweetCount  Int
+
+
+  tweetAuthor User @relation(fields: [tweetUserId], references: [userId])
+  comments Comment[]
+  likes       Like []
+  retweets   Retweet [] @relation("Retweeted")
+}
+
+model Comment {
+  commentId String  @id @default(uuid())
+  commentContent String
+  commentUserId String
+  commentTweetId String
+
+  commentAuthor User @relation(fields: [commentUserId], references: [userId])
+  commentTweet Tweet @relation(fields: [commentTweetId], references: [tweetId])
+
+}
+
+
+model Like {
+  likeId String @id @default(uuid())
+  likeUserId String
+  likeTweetId String
+
+  likedTweet Tweet  @relation(fields: [likeTweetId], references: [tweetId])
+  tweetLiker User   @relation(fields: [likeUserId], references: [userId])
+
+}
+
+model Retweet {
+  retweetId String @id @default(uuid())
+  retweetUserId String
+  retweetTweetId String
+
+  retweetedTweet Tweet @relation("Retweeted",fields: [retweetTweetId], references: [tweetId])
+  retweeter User       @relation("Retweets",fields: [retweetUserId], references: [userId])
+}

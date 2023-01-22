@@ -5,30 +5,28 @@ import BASE_URL from "../util/BaseURL";
 import {toast, ToastContainer} from "react-toastify";
 import moment from "moment";
 import "react-toastify/dist/ReactToastify.css"
-import {Tweet} from "../models/Tweet";
+import {Tweet, TweetWithUser} from "../models/Tweet";
 import TweetCard from "./TweetCard";
+import {Like} from ".prisma/client";
+import User from "../models/User";
+import {useQuery, useQueryClient} from "react-query";
 
-const HomeComponent = () => {
+
+type Response = {
+     tweets:TweetWithUser[]
+     success:boolean,
+     msg:string
+}
+const HomeComponent:React.FC = () => {
      const { data: session } = useSession()
      const [tweet,setTweet] = useState("")
-     const [tweets,setTweets] = useState<Tweet[]>([])
+     const [tweets,setTweets] = useState<TweetWithUser[]>([])
 
-     useEffect(() => {
-          fetchTweets()
-     },[])
+     const queryClient = useQueryClient()
 
-     const fetchTweets = async () => {
-          try {
-               const response = await fetch(`${BASE_URL}/api/tweets`)
-               const res = await response.json()
-               if (res.success){
-                    setTweets(res.tweets.reverse())
-               }
-          }catch (e){
-               console.log(e)
+     const fetchTweetsPromise = () => fetch(`${BASE_URL}/api/tweets`).then((res) => res.json())
+     const { isLoading,data ,error  } = useQuery<Response>(["tweets"],fetchTweetsPromise)
 
-          }
-     }
 
      const SendTweet = async () => {
           try {
@@ -48,7 +46,8 @@ const HomeComponent = () => {
                if (res.success){
                     toast.success(res.msg)
                     setTweet("")
-                    fetchTweets()
+                    await queryClient.invalidateQueries("tweets")
+
                }else {
                     toast.error(res.msg)
                }
@@ -59,7 +58,7 @@ const HomeComponent = () => {
      }
 
      return (
-          <div>
+          <>
                <ToastContainer position="top-center"/>
                <div className="w-full h-12 flex items-center justify-center">
                     <h1 className="text-white text-xl">Home</h1>
@@ -87,14 +86,23 @@ const HomeComponent = () => {
                     </button>
                </div>
                <hr className="border-gray-700 w-full"/>
+               { isLoading && (<h1>Loading</h1>) }
                {
-                    tweets.map((tweet:Tweet,index) => {
-                         return(
-                              <TweetCard tweet={tweet} key={index}/>
-                         )
-                    })
+                    data && (
+                         <>
+                              {
+                                   data.tweets.map((tweet:TweetWithUser,index:number) => {
+                                        return(
+                                             <TweetCard tweet={tweet} key={index}/>
+                                        )
+                                   })
+                              }
+                         </>
+                    )
                }
-          </div>
+               { error && (<h1>Error</h1>) }
+
+          </>
      );
 };
 

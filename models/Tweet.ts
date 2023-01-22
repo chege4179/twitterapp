@@ -1,4 +1,5 @@
 import User from "./User";
+import {Like} from ".prisma/client";
 
 
 export interface Tweet {
@@ -12,3 +13,6 @@ export interface Tweet {
      retweetCount: number;
      user: User;
 }
+
+
+export type TweetWithUser = Tweet & {likes: Like[], comments: Comment[], tweetAuthor: User}

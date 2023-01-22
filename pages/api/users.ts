@@ -1,19 +1,25 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import { MainDB } from "../../config/db";
+import prisma from "../../config/db";
 import crypto from "crypto"
+import {TypedRequestBody} from "../../types/TypedRequestBody";
 
-async function users(req: NextApiRequest, res: NextApiResponse) {
+type RequestBody = {
+     name:string,
+     email:string,
+     imageUrl:string
+}
+async function users(req: TypedRequestBody<RequestBody>, res: NextApiResponse) {
      switch (req.method){
           case "GET":
                try {
-                    const users = await MainDB("users").select()
+                    const users = await prisma.user.findMany({
 
-                    console.log("Users",users)
+                    })
+
                     return res.status(200).json({
                          success:true,
                          msg:"Users fetched successfully",
                          users : users,
-
                     })
                }catch (e) {
                     console.log("Error>>>>>>>>>>>>>>>>>>..",e)
@@ -24,23 +30,27 @@ async function users(req: NextApiRequest, res: NextApiResponse) {
                     })
                }
           case "POST":
-
                const { name,email,imageUrl } = req.body
-               const userId = crypto.randomBytes(16).toString("hex")
                try {
-                    const existingUser = await MainDB("users").where({ email })
-                    if (existingUser.length > 0){
+                    const existingUser = await prisma.user.findFirst({
+                         where:{
+                              email:email
+                         }
+                    })
+                    if (existingUser !== null){
                          return res.json({
                               msg:"A user with a similar address exists",
                               success:false
                          })
                     }else {
-                         const result = await MainDB("users").insert([{
-                              userId:userId,
-                              displayName:name,
-                              email:email,
-                              imageUrl:imageUrl,
-                         }])
+                         const result = await prisma.user.create({
+                              data:{
+                                   userId:crypto.randomBytes(16).toString("hex"),
+                                   email:email,
+                                   displayName:name,
+                                   imageUrl:imageUrl,
+                              }
+                         })
                          return res.json({
                               msg:"New user added to the database",
                               success:true,
