@@ -3,7 +3,7 @@ import {useSession, signOut} from "next-auth/react";
 import Image from "next/image";
 import BASE_URL from "../util/BaseURL";
 
-const LeftBar = () => {
+const LeftBar:React.FC = () => {
      const { data: session } = useSession()
 
      return (

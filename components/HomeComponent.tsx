@@ -20,7 +20,6 @@ type Response = {
 const HomeComponent:React.FC = () => {
      const { data: session } = useSession()
      const [tweet,setTweet] = useState("")
-     const [tweets,setTweets] = useState<TweetWithUser[]>([])
 
      const queryClient = useQueryClient()
 

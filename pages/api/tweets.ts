@@ -1,9 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import crypto from "crypto";
-import {
-
-     getUserInfo
-} from "../../config/functions";
 import prisma from "../../config/db";
 
 async function tweets(req: NextApiRequest, res: NextApiResponse) {
@@ -42,11 +38,14 @@ async function tweets(req: NextApiRequest, res: NextApiResponse) {
                     }
                })
                try {
+
                     const result = await prisma.tweet.create({
+                         // @ts-ignore
                          data:{
+
                               tweetContent:tweetContent,
                               tweetUserId:user?.userId,
-                              tweetImageUrl:null,
+                              tweetImageUrl:"",
                               createdAt:createdAt,
                               createdOn:createdOn,
                               likeCount:0,
