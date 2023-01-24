@@ -6,7 +6,7 @@ The app uses MySQL for the database with passwordless Google Sign-In.
 
 The database in deployed on PlanetScale.
 
-To avoid writing boilerplate SQL statements. I used the Knex.js Query Builder to 
+To avoid writing boilerplate SQL statements. I used the Prisma ORM to 
 query the database 
 
 The app is still a work in progress so not all features are done 
