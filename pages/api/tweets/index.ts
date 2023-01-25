@@ -1,10 +1,11 @@
 import {NextApiRequest, NextApiResponse} from "next";
+import prisma from "../../../config/db";
 import crypto from "crypto";
-import prisma from "../../config/db";
 
 async function tweets(req: NextApiRequest, res: NextApiResponse) {
      switch (req.method){
           case "GET":
+
                try {
                     const tweets = await prisma.tweet.findMany({
                          include:{

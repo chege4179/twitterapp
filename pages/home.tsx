@@ -33,13 +33,8 @@ const HomePage = () => {
 
      return (
           <HomeLayout>
-               <div className='flex justify-center w-full h-full'>
-                    <div className='max-w-screen-xl  rounded-2xl w-full h-full flex sm:p-0 md:flex-col md:items-center'>
-                         <LeftBar/>
-                         <CenterBar/>
-                         <RightBar/>
-                    </div>
-               </div>
+               <CenterBar/>
+
           </HomeLayout>
      );
 };
